@@ -11,6 +11,10 @@ int numTargets = 6;
 int score = 0; //Implementing a player's score system
 Timer gameTimer; //Implementing the timer
 
+import processing.sound.*;
+SoundFile targetSound;
+
+
 void setup() {
   size(400, 400);
   
@@ -19,6 +23,8 @@ void setup() {
   backgrounds[0] = loadImage("background1.jpg");
   backgrounds[1] = loadImage("background2.jpg");
   backgrounds[2] = loadImage("background3.png");
+  
+  targetSound = new SoundFile(this, "pop.mp3"); //Adjust the file name as needed
   
   restartGame(); //Initialize the game
 }
@@ -61,8 +67,9 @@ void mousePressed() {
     for (int i = 0; i < numTargets; i++) {
       if (targets[i].isClicked(mouseX, mouseY)) {
         println("Target " + i + " destroyed!");
-        targets[i].respawn(); // Respawn the target
-        score++; // Increment score
+        targets[i].respawn(); //Respawn the target
+        targetSound.play(); //Play the pop sound
+        score++; //Increment score
       }
     }
   }
