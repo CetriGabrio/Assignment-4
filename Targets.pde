@@ -3,19 +3,25 @@
 //Implementation log #3 - using PVector
 
 //Here I am updating the Movement and Position of the targets to use PVector
+//Update: I also added acceleration so that targets start at a base speed and gradually gain speed while they move
 class Target {
   PVector position; //Position of targets
   PVector velocity; //Velocity of targets
+  PVector acceleration; //Acceleration of targets
   float radius = 20; //Size of targets
-  float baseSpeed = 20.0 / 60.0; //Base velocity per frame (10 pixels per second)
+  float baseSpeed = 20.0 / 60.0; //Base velocity per frame (20 pixels per second)
+  float maxSpeed; // Maximum velocity
 
   //Constructor to initialize the target
   Target() {
+    maxSpeed = baseSpeed * 5; //Setting the max speed of targets as 5x their base speed
     respawn();
   }
 
   //Update the target's position every frame
   void update() {
+    velocity.add(acceleration); //Increase the velocity by acceleration
+    velocity.limit(maxSpeed); //Cap the velocity to max speed
     position.add(velocity); //Update position using velocity
     
     //Check if the target has moved off-screen and destroy
@@ -42,5 +48,6 @@ class Target {
 
     position = new PVector(startX, random(height)); //Set starting position at random height
     velocity = new PVector(directionX * baseSpeed * random(1, 2), 0); //Base speed
+    acceleration = new PVector(directionX * (baseSpeed / 60), 0); //Gradual acceleration
   }
 }
