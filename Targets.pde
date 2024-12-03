@@ -8,14 +8,12 @@ class Target {
   PVector position; //Position of targets
   PVector velocity; //Velocity of targets
   PVector acceleration; //Acceleration of targets
-  float radius = 20; //Size of targets
+  float radius; //Size of targets
   float baseSpeed = 20.0 / 60.0; //Base velocity per frame (20 pixels per second)
   float maxSpeed; //Maximum velocity
-  float size; //Size of targets
 
   //Constructor to initialize the target
   Target() {
-    size = random(15, 40); //Random size between 15 and 40 pixels
     maxSpeed = baseSpeed * 5; //Setting the max speed of targets as 5x their base speed
     respawn();
   }
@@ -35,7 +33,21 @@ class Target {
 
   //Display the targets
   void display() {
-    ellipse(position.x, position.y, size, size);
+    int numRings = 5; // Number of concentric circles
+    float ringStep = radius / numRings; // Width of each ring
+    
+    for (int i = 0; i < numRings; i++) {
+      if (i % 2 == 0) {
+        fill(255); // White for even rings
+      } else {
+        fill(0); // Black for odd rings
+      }
+      ellipse(position.x, position.y, radius - i * ringStep, radius - i * ringStep);
+    }
+    
+    // Add a red bullseye in the center
+    fill(255, 0, 0); // Red color
+    ellipse(position.x, position.y, ringStep, ringStep);
   }
 
   //Check if the targets are clicked
@@ -47,7 +59,8 @@ class Target {
   void respawn() {
     float startX = random(1) < 0.5 ? -radius : width + radius; //Starting position outside of the screen
     float directionX = startX < 0 ? 1 : -1; //Movement direction
-
+    
+    radius = random(20, 50); //Ensure targets keep spawning with random sizes
     position = new PVector(startX, random(50, 390)); //Set starting position at a constrained height to not everlap with the text
     velocity = new PVector(directionX * baseSpeed * random(1, 2), 0); //Base speed
     acceleration = new PVector(directionX * (baseSpeed / 60), 0); //Gradual acceleration
