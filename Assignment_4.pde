@@ -13,6 +13,7 @@ Timer gameTimer; //Implementing the timer
 
 import processing.sound.*;
 SoundFile targetSound;
+SoundFile missSound;
 
 
 void setup() {
@@ -24,8 +25,9 @@ void setup() {
   backgrounds[1] = loadImage("background2.jpg");
   backgrounds[2] = loadImage("background3.png");
   
-  targetSound = new SoundFile(this, "pop.mp3"); //Adjust the file name as needed
-  
+  targetSound = new SoundFile(this, "pop.mp3"); //popping sound
+  missSound = new SoundFile(this, "miss.mp3");  //miss sound
+
   restartGame(); //Initialize the game
 }
 
@@ -79,6 +81,7 @@ void mousePressed() {
       //If no target was hit, decrement the score by 1 point
       if (!hitTarget) {
         println("Missed! Losing 1 point."); //Debugging tool to ensure everything is working as intended
+        missSound.play();  //Play the miss sound
         score = max(0, score - 1); //Ensure score does not go below 0
     }
   }
