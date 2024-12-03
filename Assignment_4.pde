@@ -31,6 +31,10 @@ void draw() {
     background(225); //Fallback color if no background is set
   }
   
+  //Just a white rectangle to make the text visible
+  fill(242, 242, 242, 104);
+  rect(0, 0, width, 39);
+  
   //Display the timer
   gameTimer.display();
 
