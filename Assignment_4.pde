@@ -3,8 +3,6 @@
 //Since I am able to use version control, for this project I decided to progress gradually
 //This means that I will implement the features as a checklist while I go
 
-// targets can get destroyed when the players click them
-
 //Spawn 6 targets so that always 6 of there are alive every frame
 int numTargets = 6;
 
@@ -26,7 +24,6 @@ void setup() {
   //Initialize the targets with full health
   for (int i = 0; i < numTargets; i++) {
     spawnTarget(i);
-    alive[i] = true;
   }
 }
 
@@ -67,6 +64,7 @@ void mousePressed() {
       if (distance < targetRadius / 2) { //Check if the click is within the target hitbox
         alive[i] = false; //Destroy the target
         println("Target " + i + " destroyed!"); //Debugging tool to make sure everything works as intended
+        spawnTarget(i); //Respawn the target so that always 6 are alive
       }
     }
   }
