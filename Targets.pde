@@ -48,7 +48,7 @@ class Target {
     float startX = random(1) < 0.5 ? -radius : width + radius; //Starting position outside of the screen
     float directionX = startX < 0 ? 1 : -1; //Movement direction
 
-    position = new PVector(startX, random(height)); //Set starting position at random height
+    position = new PVector(startX, random(50, 390)); //Set starting position at a constrained height to not everlap with the text
     velocity = new PVector(directionX * baseSpeed * random(1, 2), 0); //Base speed
     acceleration = new PVector(directionX * (baseSpeed / 60), 0); //Gradual acceleration
   }
