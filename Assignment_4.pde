@@ -6,10 +6,12 @@
 Target[] targets; //Array of Target objects to manage the several amount of shapes
 int numTargets = 6;
 int score = 0; //Implementing a player's score system
+Timer gameTimer; //Implementing the timer
 
 void setup() {
   size(400, 400);
   targets = new Target[numTargets];
+  gameTimer = new Timer(60); //Initialize the timer with 60 seconds
   
   //Initialize the targets
   for (int i = 0; i < numTargets; i++) {
@@ -24,6 +26,16 @@ void draw() {
   textSize(20);
   fill(0);
   text("Score: " + score, 10, 30);
+  
+  //Display the timer
+  gameTimer.display();
+  
+  //Check if time is up
+  if (gameTimer.isTimeUp()) {
+    noLoop(); //Stop the game
+    return;
+  }
+
 
   //Update and draw each target
   for (Target t : targets) {
