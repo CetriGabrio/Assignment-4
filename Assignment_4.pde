@@ -3,6 +3,8 @@
 //Since I am able to use version control, for this project I decided to progress gradually
 //This means that I will implement the features as a checklist while I go
 
+PImage backgroundArt; //I am using pixel art images as background for my game
+
 Target[] targets; //Array of Target objects to manage the several amount of shapes
 int numTargets = 6;
 int score = 0; //Implementing a player's score system
@@ -10,6 +12,9 @@ Timer gameTimer; //Implementing the timer
 
 void setup() {
   size(400, 400);
+  
+  backgroundArt = loadImage("background.png");  //Load the background image
+    
   targets = new Target[numTargets];
   gameTimer = new Timer(); //Initialize the timer
   
@@ -17,10 +22,15 @@ void setup() {
   for (int i = 0; i < numTargets; i++) {
     targets[i] = new Target();
   }
+  
+  restartGame(); //Initialize the game
 }
 
 void draw() {
   background(225);
+  
+  //Display the background pixel art
+  image(backgroundArt, 0, 0, width, height);  //Set the image to cover the entire window
   
   //Display and update score with text
   textSize(25);
