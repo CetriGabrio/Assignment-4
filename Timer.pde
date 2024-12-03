@@ -4,7 +4,7 @@
 //This timer uses millis() and it is related to my implementation log #2
 
 class Timer {
-  int totalTime = 60;  //Total time for the timer in seconds
+  int totalTime = 1;  //Total time for the timer in seconds
   int startTime; //Start time in milliseconds
 
   //Constructor to initialize the timer
@@ -21,12 +21,12 @@ class Timer {
     int remainingTime = totalTime - elapsedTime;
 
     //Display and update the timer with text
-    textSize(20);
+    textSize(25);
     fill(0);
     if (remainingTime >= 0) {
-      text("Time: " + remainingTime, width - 100, height - 20);
+      text("Time: " + remainingTime, width - 100, height - 370);
     } else {
-      text("Game Over", width / 2 - 75, height / 2);
+      text("Game Over", width / 2 - 50, height / 2);
       noLoop(); //Stop and restart when the game ends
     }
   }

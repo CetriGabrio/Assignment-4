@@ -23,7 +23,7 @@ void draw() {
   background(200);
   
   //Display and update score with text
-  textSize(20);
+  textSize(25);
   fill(0);
   text("Score: " + score, 10, 30);
   
