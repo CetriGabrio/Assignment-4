@@ -64,13 +64,22 @@ void draw() {
 
 void mousePressed() {
   if (looping) { //Allow interactions only if the game is still running
+      boolean hitTarget = false; // Track if a target was hit
+
     for (int i = 0; i < numTargets; i++) {
       if (targets[i].isClicked(mouseX, mouseY)) {
         println("Target " + i + " destroyed!");
         targets[i].respawn(); //Respawn the target
         targetSound.play(); //Play the pop sound
         score++; //Increment score
+        hitTarget = true;     // Mark that a target was hit
       }
+    }
+    
+      //If no target was hit, decrement the score by 1 point
+      if (!hitTarget) {
+        println("Missed! Losing 1 point."); //Debugging tool to ensure everything is working as intended
+        score = max(0, score - 1); //Ensure score does not go below 0
     }
   }
 }
