@@ -4,6 +4,7 @@
 
 //Here I am updating the Movement and Position of the targets to use PVector
 //Update: I also added acceleration so that targets start at a base speed and gradually gain speed while they move
+
 class Target {
   PVector position; //Position of targets
   PVector velocity; //Velocity of targets
@@ -33,20 +34,36 @@ class Target {
 
   //Display the targets
   void display() {
-    int numRings = 5; // Number of concentric circles
-    float ringStep = radius / numRings; // Width of each ring
     
-    for (int i = 0; i < numRings; i++) {
+    //Check if the mouse is hovering over this target
+    boolean isHovered = isHovered(mouseX, mouseY);
+
+    int numRings = 5; //Number of concentric circles
+    float ringStep = radius / numRings; //Width of each ring
+    
+    //Draw the outermost ring with or without a stroke
+    if (isHovered) {
+      stroke(255, 0, 0); //Red stroke for hover effect
+      strokeWeight(3);
+    } else {
+      noStroke(); //No stroke otherwise
+    }
+    fill(255); //Outer ring color (white)
+    ellipse(position.x, position.y, radius, radius); //Outer ring
+  
+    //Draw the inner rings without a stroke
+    noStroke(); //Ensure no stroke for inner rings
+    for (int i = 1; i < numRings; i++) { //Start from the second ring
       if (i % 2 == 0) {
-        fill(255); // White for even rings
+        fill(255); //White for even rings
       } else {
-        fill(0); // Black for odd rings
+        fill(0); //Black for odd rings
       }
       ellipse(position.x, position.y, radius - i * ringStep, radius - i * ringStep);
     }
-    
-    // Add a red bullseye in the center
-    fill(255, 0, 0); // Red color
+
+    //Add a red bullseye in the center
+    fill(255, 0, 0); //Red color
     ellipse(position.x, position.y, ringStep, ringStep);
   }
 
@@ -54,6 +71,12 @@ class Target {
   boolean isClicked(float mouseX, float mouseY) {
     return dist(mouseX, mouseY, position.x, position.y) < radius / 2;
   }
+  
+  // Check if the target is hovered
+  boolean isHovered(float mouseX, float mouseY) {
+  return dist(mouseX, mouseY, position.x, position.y) < radius / 2;
+  }
+
 
   //Respawn the targets outside the screen with random attributes
   void respawn() {
