@@ -10,10 +10,12 @@ class Target {
   PVector acceleration; //Acceleration of targets
   float radius = 20; //Size of targets
   float baseSpeed = 20.0 / 60.0; //Base velocity per frame (20 pixels per second)
-  float maxSpeed; // Maximum velocity
+  float maxSpeed; //Maximum velocity
+  float size; //Size of targets
 
   //Constructor to initialize the target
   Target() {
+    size = random(15, 40); //Random size between 15 and 40 pixels
     maxSpeed = baseSpeed * 5; //Setting the max speed of targets as 5x their base speed
     respawn();
   }
@@ -33,7 +35,7 @@ class Target {
 
   //Display the targets
   void display() {
-    ellipse(position.x, position.y, radius, radius);
+    ellipse(position.x, position.y, size, size);
   }
 
   //Check if the targets are clicked
