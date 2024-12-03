@@ -5,6 +5,7 @@
 
 Target[] targets; //Array of Target objects to manage the several amount of shapes
 int numTargets = 6;
+int score = 0; //Implementing a player's score system
 
 void setup() {
   size(400, 400);
@@ -19,6 +20,11 @@ void setup() {
 void draw() {
   background(200);
   
+  //Display and update score with text
+  textSize(20);
+  fill(0);
+  text("Score: " + score, 10, 30);
+
   //Update and draw each target
   for (Target t : targets) {
     t.update();
@@ -32,6 +38,7 @@ void mousePressed() {
     if (targets[i].isClicked(mouseX, mouseY)) {
       println("Target " + i + " destroyed!"); //Debugging tool to make sure everything works as intended
       targets[i].respawn(); //Respawn the target so that always 6 are alive
+      score++; //Increment score every time a target is destroyed
     }
   }
 }
