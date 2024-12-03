@@ -20,7 +20,7 @@ void setup() {
 }
 
 void draw() {
-  background(200);
+  background(225);
   
   //Display and update score with text
   textSize(25);
@@ -51,4 +51,24 @@ void mousePressed() {
       score++; //Increment score every time a target is destroyed
     }
   }
+}
+
+//Restart the game when the R key is pressed
+void keyPressed() {
+  if (key == 'R' || key == 'r') {
+    restartGame();
+  }
+}
+
+//Restarting the whole game logic
+void restartGame() {
+  score = 0; //Reset the score to 0
+  gameTimer = new Timer(); //Restart the timer at 60 seconds
+
+  //Initialize the targets
+  targets = new Target[numTargets];
+  for (int i = 0; i < numTargets; i++) {
+    targets[i] = new Target();
+  }
+  loop(); //Restart the draw loop
 }
