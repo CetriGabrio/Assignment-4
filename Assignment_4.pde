@@ -11,7 +11,7 @@ Timer gameTimer; //Implementing the timer
 void setup() {
   size(400, 400);
   targets = new Target[numTargets];
-  gameTimer = new Timer(60); //Initialize the timer with 60 seconds
+  gameTimer = new Timer(); //Initialize the timer
   
   //Initialize the targets
   for (int i = 0; i < numTargets; i++) {
@@ -30,12 +30,10 @@ void draw() {
   //Display the timer
   gameTimer.display();
   
-  //Check if time is up
-  if (gameTimer.isTimeUp()) {
-    noLoop(); //Stop the game
+  //Stop the game if timer reaches 0
+  if (!looping) {
     return;
   }
-
 
   //Update and draw each target
   for (Target t : targets) {
