@@ -1,9 +1,7 @@
-//To keep the code more organized, I created a separate class to manage the targets
+//Class for controlling the targets
 
-//Implementation log #3 - using PVector
-
-//Here I am updating the Movement and Position of the targets to use PVector
-//Update: I also added acceleration so that targets start at a base speed and gradually gain speed while they move
+//Targets are spawning, moving and accelerating with PVector
+//This solves my Impleentation Log #3
 
 class Target {
   PVector position; //Position of targets
@@ -22,10 +20,10 @@ class Target {
   //Update the target's position every frame
   void update() {
     velocity.add(acceleration); //Increase the velocity by acceleration
-    velocity.limit(maxSpeed); //Cap the velocity to max speed
+    velocity.limit(maxSpeed); //Cap the velocity to the max speed
     position.add(velocity); //Update position using velocity
     
-    //Check if the target has moved off-screen and destroy
+    //Check if the target has moved off-screen and, in case, destroy it
     if ((velocity.x > 0 && position.x > width + radius) || 
         (velocity.x < 0 && position.x < -radius)) {
       respawn(); //Respawn the target when it gets destroyed
@@ -35,15 +33,21 @@ class Target {
   //Display the targets
   void display() {
     
-    //Check if the mouse is hovering over this target
+    //Here I am adding an hovering function that will create a stroke around the target when the mouse is hovering it
+    //Essential to make sure that the mouse is enclosed between the target's hitbox
+    //It solves my Implementation Log #2
+    
+    //Check if the mouse is hovering over the target
     boolean isHovered = isHovered(mouseX, mouseY);
 
+    //visuals
+    //Trying to recreate realistic circular looking targets
     int numRings = 5; //Number of concentric circles
     float ringStep = radius / numRings; //Width of each ring
     
-    //Draw the outermost ring with or without a stroke
+    //Draw the outermost ring without a stroke
     if (isHovered) {
-      stroke(255, 0, 0); //Red stroke for hover effect
+      stroke(255, 0, 0); //Red stroke if the target is being hovered
       strokeWeight(3);
     } else {
       noStroke(); //No stroke otherwise
@@ -52,7 +56,7 @@ class Target {
     ellipse(position.x, position.y, radius, radius); //Outer ring
   
     //Draw the inner rings without a stroke
-    noStroke(); //Ensure no stroke for inner rings
+    noStroke();
     for (int i = 1; i < numRings; i++) { //Start from the second ring
       if (i % 2 == 0) {
         fill(255); //White for even rings
@@ -63,11 +67,11 @@ class Target {
     }
 
     //Add a red bullseye in the center
-    fill(255, 0, 0); //Red color
+    fill(255, 0, 0);
     ellipse(position.x, position.y, ringStep, ringStep);
   }
 
-  //Check if the targets are clicked
+  //Check if the target is clicked
   boolean isClicked(float mouseX, float mouseY) {
     return dist(mouseX, mouseY, position.x, position.y) < radius / 2;
   }

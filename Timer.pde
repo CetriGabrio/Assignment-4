@@ -1,3 +1,8 @@
+//Class to handle the countdown timer
+
+//As seen by the branch in version control, this version of the timer uses millis()
+//Solves my Implementation Log #2
+
 class Timer {
   int totalTime = 60;  //Total time for the timer in seconds
   int startTime; //Start time in milliseconds

@@ -1,5 +1,9 @@
 //New class for the start screen
 
+//This screen will pop up at the beginning
+//There will be a short explanation of the game
+//Explains hot to start the game
+
 class StartScreen {
   PImage startImage; //Variable to hold the start screen image
 

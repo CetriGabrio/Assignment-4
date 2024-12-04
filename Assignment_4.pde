@@ -1,53 +1,83 @@
-//Initial setup of the game created
+//Welcome to my super incredible FPS training game
+//Made by Gabriele Ilacqua
 
-//Since I am able to use version control, for this project I decided to progress gradually
-//This means that I will implement the features as a checklist while I go
+//In this game, you can play alone or challenge your friends
+//You have to click the targets to destroy them and obtain 1 point
+//The goal is to obtain 60 points in 60 seconds
+//But attention, if you miss the target, you will lose 1 point every time
+//Who will win this EPIC challenge???
 
+/////////////////////////////////////////////////////
+/////////////////////SOURCES/////////////////////////
+/////////////////////////////////////////////////////
+//Thank you to all the talented artists who alloweded me to use their creations for my project
+
+//backgrounds
+//1: https://www.creativefabrica.com/product/japan-cityscape-at-night-pixel-art/
+//2: https://www.creativefabrica.com/product/japan-cityscape-at-night-pixel-art-4/
+//3: https://wallpaperaccess.com/japanese-pixel-art
+
+//sounds
+//POP: https://pixabay.com/sound-effects/search/pop/ (@freesound_community)
+//SWING: https://pixabay.com/it/sound-effects/search/miss/ (@floraphonic)
+
+//(All the other screens were created by me, so @ME)
+
+
+/////////////////////////////////////////////////////
+///////////////////VARIABLES/////////////////////////
+/////////////////////////////////////////////////////
+
+//Background images
 PImage[] backgrounds; //Array to store all the background images
-PImage activeBackground; //Variable for the current background image
+PImage activeBackground; //Variable only for the current background image
 
+//Targets
 Target[] targets; //Array of Target objects to manage the several amount of shapes
 int numTargets = 6;
-int score = 0; //Implementing a player's score system
+int score = 0; //Implementing the player's score system
 Timer gameTimer; //Implementing the timer
 
+//Sounds
 import processing.sound.*;
-SoundFile targetSound;
-SoundFile missSound;
+SoundFile targetSound; //POP sound
+SoundFile missSound; //Swing sound
 
+//Startscreen
 StartScreen startScreen;
 boolean isStartScreen = true; //Game starts with the start screen
 
-
+//Setupppp
 void setup() {
   size(400, 400);
   
-  //Load the background images
+  //Load the 3 background images
   backgrounds = new PImage[3];
   backgrounds[0] = loadImage("background1.jpg");
   backgrounds[1] = loadImage("background2.jpg");
   backgrounds[2] = loadImage("background3.png");
   
-  targetSound = new SoundFile(this, "pop.mp3"); //Popping sound
-  missSound = new SoundFile(this, "miss.mp3");  //Miss sound
+  targetSound = new SoundFile(this, "pop.mp3"); //POP sound
+  missSound = new SoundFile(this, "miss.mp3");  //SWING sound
 
   startScreen = new StartScreen(); //Initialize start screen
   restartGame(); //Initialize the game
 }
 
+//Updateeee
 void draw() {
      if (isStartScreen) {
-      startScreen.display(); // Show the start screen
+      startScreen.display(); //Display the start screen
      } else {
        
-    //Display the current background
+    //Display the current background (one of the three options)
     if (activeBackground != null) {
-      image(activeBackground, 0, 0, width, height);
+      image(activeBackground, 0, 0, width, height); //Background adjusted to cover the whole canvas
     } else {
       background(225); //Just a precaution in case the background images stop working
     }
   
-    //Just a white rectangle to make the text more visible
+    //Just a white rectangle at the top to make the text more visible
     fill(242, 242, 242, 104);
     rect(0, 0, width, 39);
     
@@ -72,6 +102,7 @@ void draw() {
   }
 }
 
+//CLICKKK
 void mousePressed() {
   if (looping) { //Loop to allow interactions only if the game is still running
       boolean hitTarget = false; //Track if a target was hit
@@ -81,14 +112,14 @@ void mousePressed() {
         println("Target " + i + " destroyed!");
         targets[i].respawn(); //Respawn the target
         targetSound.play(); //Play the pop sound
-        score++; //Increment score
+        score++; //Increment score by 1
         hitTarget = true;  //Mark that a target was hit
       }
     }
     
-      //If no target was hit, decrement the score by 1 point
+      //If the player clicks but miss the target, decrement their score by 1 point
       if (!hitTarget) {
-        println("Missed! Losing 1 point."); //Debugging tool to ensure everything is working as intended
+        //println("Missed! Losing 1 point."); //Debugging tool to ensure everything is working as intended
         missSound.play();  //Play the miss sound
         score = max(0, score - 1); //Ensure score does not go below 0
     }
@@ -111,7 +142,7 @@ void keyPressed() {
 //Restart game logic
 void restartGame() {
   score = 0; //Reset score
-  gameTimer = new Timer(); //Restart the timer
+  gameTimer = new Timer(); //Reset the timer
   
   //Select a random background
   int randomIndex = int(random(backgrounds.length));
